@@ -37,16 +37,18 @@ my_drugs = [
     Drugs("Heroin", (2000, 10000), 0),
     Drugs("Weed", (300, 1000), 0),
     Drugs("Hash", (200, 1200), 0),
+    Drugs("Opium", (400, 1800), 0),
     Drugs("Acid", (1000, 4200), 0),
     Drugs("Ludes", (18, 75), 0),
-    Drugs("Opium", (400, 1800), 0)
+
 ]
 
 event_list = [
     Events("Cocaine", 'El Chapo Arrested! Coke price thru the roof!', (40000, 110000)),
     Events("Heroin", 'Trump cracks down on opiates! Heroin in high demand by addicts', (9000, 25000)),
     Events("Weed", 'The Mexicans have flooded the market with cheap grass! Weed prices bottom out', (50, 400)),
-    Events("Hash", 'Ricky\'s hash driveway burned down! Jesus Murphy look at the price boys!', (800, 2000))
+    Events("Hash", 'Ricky\'s hash driveway burned down! Jesus Murphy look at the price boys!', (800, 2000)),
+    Events("Opium", 'Shenzhen 深圳 Opium 鸦片 Den 塔 was raided! Street price is popping off!', (1800, 6000))
 ]
 
 
@@ -101,7 +103,7 @@ def validate_numeric(value_string, numeric_type=int):
 
 
 def validate_alpha(value_string):
-    """Validate a string as being a numeric_type"""
+    """Validate a string as being a single alpha type"""
     try:
         if value_string.isalpha() and len(value_string) == 1:
             return value_string
@@ -299,7 +301,7 @@ for game_day in range(1, day+1):
 # ending printout of ending cash
 print("You finished with $" + str(cash))
 if cash > starting_cash:
-    print('You made money! Up ' + str((cash/starting_cash).__round__()) + '. Well done.')
+    print('You made money! Up ' + str((cash/starting_cash).__round__()) + 'x! Well done.')
 if cash == starting_cash:
     print('You broke even... hope you at least had fun')
 if cash < starting_cash:
