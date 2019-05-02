@@ -73,6 +73,27 @@ def generate_event():
 
 def officer():
     global cash
+    global inventory
+    # rolls to see if the officer takes drugs from you
+    # odds are (1 - event chance) * (officer chance) * (confiscation chance)
+    # currently (1 - 0.35) * (0.20) * (0.35) = 4.55%
+    # chance is approximate, not sure how randint handles endpoints, close enough for my purposes
+    if random.randint(0, 100) > 65: # confiscation chance
+        k = 0
+        j = 0
+        # removes all drugs from inventory tally and individual class attirbute
+        for i in range(0, len(my_drugs)):
+            j = my_drugs[i].amount
+            my_drugs[i].amount = 0
+            k += j
+        inventory -= k
+        # sends 'conf' for confiscated. sending a string is better than a number here
+        cash_taken = 'conf'
+        return cash_taken
+    # rolls to see if the officer takes cash from you
+    # odds are (1 - event chance) * (officer chance) * (1 - confiscation chance)
+    # currently (1 - 0.35) * (0.20) * (0.65) = 8.45%
+    # chance is approximate, not sure how randint handles endpoints, close enough for my purposes
     cash_taken = random.randint(1, cash-1)
     cash -= cash_taken
     return cash_taken
@@ -234,14 +255,20 @@ def location_change():
 
 def print_list(day_play, total_day, loc_choice, event_number, price_list, cash_stolen):
     os.system('cls' if os.name == 'nt' else 'clear')
+    news_header = "=" * 36 + "N E W S" + "=" * 37
+    news_footer = "=" * 79
     if event_number != -1:
-        print("=" * 36 + "N E W S" + "=" * 37)
+        print(news_header)
         print(event_list[event_number].text)
-        print("=" * 79)
-    if event_number == -1 and cash_stolen != 0:
-        print("=" * 36 + "N E W S" + "=" * 37)
+        print(news_footer)
+    if event_number == -1 and cash_stolen != 0 and cash_stolen != 'conf':
+        print(news_header)
         print("Officer Leroy stopped you and took $" + str(cash_stolen) + " from you.")
-        print("=" * 79)
+        print(news_footer)
+    if event_number == -1 and cash_stolen == 'conf':
+        print(news_header)
+        print("Officer Leroy stopped you and took all of your drugs.")
+        print(news_footer)
     print("Location: " + loc[int(loc_choice) - 1])
     print("Day: " + str(day_play) + '/' + str(total_day))
     print("Cash: $" + str(cash))
@@ -257,6 +284,10 @@ def gameloop(day_play, total_day):
     loc_choice = location_change()
     event_number = generate_event()
     cash_stolen = 0
+    # rolls to see if the officer event happens
+    # odds are (1 - event chance) * (officer chance)
+    # currently (1 - 0.35) * (0.20) = 13%
+    # chance is approximate, not sure how randint handles endpoints, close enough for my purposes
     if event_number == -1 and random.randint(0, 100) > 80:
         cash_stolen = officer()
     price_list = price_change(event_number)
