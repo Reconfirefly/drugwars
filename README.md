@@ -1,7 +1,8 @@
 # drugwars
 drugwars is a simple trading game where you try and make as much money as you can in a set 
 time period (try either a week for a quick game, or a month for a longer one), with some
-surprises along the way.
+surprises along the way. Move between cities to get different prices for your drug stash,
+and remember the golden rule: buy low, sell high!
 
 For reference, the drugs fluctuate between the prices listed in the parenthesis, but they
 can change wildly with events.
