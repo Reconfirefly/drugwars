@@ -18,3 +18,8 @@ can change wildly with events.
 You can also get stopped by officer Leroy and have some cash/drugs taken. 
 
 So yeah, that's about it. Nothing too riveting, but its a neat time killer if you've got a few minutes.
+
+# usage
+I've included a .py file if you've got python installed on your machine. If you want the standalone game, take the drugwars.exe file in the dist folder. 
+
+Grab the high_scores.pickle file and keep it in the same folder as drugwars.py or drugwars.exe to keep count of highscores. You don't need this, and the functionality will be ignored if the file is not present. But nobody will believe you made 500k in a week unless they can see the pickle :p
