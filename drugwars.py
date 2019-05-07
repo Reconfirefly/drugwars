@@ -4,7 +4,6 @@ import os
 import time
 import pickle
 
-
 class Drugs:
 
     def __init__(self, name, price_range, amount):
