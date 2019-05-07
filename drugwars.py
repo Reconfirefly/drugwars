@@ -40,7 +40,8 @@ my_drugs = [
     Drugs("Hash", (200, 1200), 0),
     Drugs("Opium", (400, 1800), 0),
     Drugs("Acid", (1000, 4200), 0),
-    Drugs("Ludes", (18, 75), 0)
+    Drugs("Ludes", (18, 75), 0),
+
 ]
 
 event_list = [
@@ -319,13 +320,10 @@ inventory = 0
 starting_cash = 2000
 cash = starting_cash
 # filters player's input for the game duration
-try:
-    file = open('high_score.pickle', 'rb')
-    high_score = pickle.load(file)
-    file.close()
-    print('The Local high score is $' + str(high_score))
-except FileNotFoundError:
-    None
+file = open('high_score.pickle', 'rb')
+high_score = pickle.load(file)
+file.close()
+print('The Local high score is $' + str(high_score))
 while True:
     day = input("How many days do you want to play?\n")
     try:
@@ -337,16 +335,13 @@ while True:
 for game_day in range(1, day+1):
     gameloop(game_day, day)
 # Loading highscore to variable, comparing against cash and ammending if new high score is achieved.
-try:
-    file = open('high_score.pickle', 'rb')
-    high_score = pickle.load(file)
+file = open('high_score.pickle', 'rb')
+high_score = pickle.load(file)
+file.close()
+if cash > int(high_score):
+    file = open('high_score.pickle', 'wb')
+    pickle.dump(cash, file)
     file.close()
-    if cash > int(high_score):
-        file = open('high_score.pickle', 'wb')
-        pickle.dump(cash, file)
-        file.close()
-except FileNotFoundError:
-    None
 print("You finished with $" + str(cash))
 if cash > starting_cash:
     print('You made money! Up ' + str((cash/starting_cash).__round__()) + 'x! Well done.')
