@@ -2,6 +2,7 @@ from tkinter import *
 import random
 import os
 import time
+import pickle
 
 
 class Drugs:
@@ -319,6 +320,10 @@ inventory = 0
 starting_cash = 2000
 cash = starting_cash
 # filters player's input for the game duration
+file = open('high_score.pickle', 'rb')
+high_score = pickle.load(file)
+file.close()
+print('The Local high score is $' + str(high_score))
 while True:
     day = input("How many days do you want to play?\n")
     try:
@@ -329,7 +334,14 @@ while True:
 # Calls gameloop the number of times inputted by the player
 for game_day in range(1, day+1):
     gameloop(game_day, day)
-# ending printout of ending cash
+# Loading highscore to variable, comparing against cash and ammending if new high score is achieved.
+file = open('high_score.pickle', 'rb')
+high_score = pickle.load(file)
+file.close()
+if cash > int(high_score):
+    file = open('high_score.pickle', 'wb')
+    pickle.dump(cash, file)
+    file.close()
 print("You finished with $" + str(cash))
 if cash > starting_cash:
     print('You made money! Up ' + str((cash/starting_cash).__round__()) + 'x! Well done.')
